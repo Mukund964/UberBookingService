@@ -7,7 +7,7 @@ import org.example.uberbookingservice.dtos.BookingResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface BookingService {
     BookingResponseDto createBooking(BookingRequestDto bookingRequestDto);
 }

@@ -23,7 +23,7 @@ public class RetroFitConfig {
     public LocationServiceApi locationServiceApi(){
 
         return new Retrofit.Builder()
-                .baseUrl(getServiceUrl("LOCATIONSERVICE"))
+                .baseUrl(getServiceUrl("UBERLOCATIONSERVICE"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder().build())
                 .build()
