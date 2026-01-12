@@ -24,7 +24,6 @@ public class BookingController {
 
     @PostMapping("/create")
     public ResponseEntity<BookingResponseDto> createBooking(@RequestBody BookingRequestDto bookingRequestDto){
-        System.out.println(bookingRequestDto.getPassengerId());
         return new ResponseEntity<>(bookingService.createBooking(bookingRequestDto),HttpStatus.CREATED);
     }
 
