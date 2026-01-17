@@ -10,4 +10,6 @@ import org.springframework.stereotype.Service;
 
 public interface BookingService {
     BookingResponseDto createBooking(BookingRequestDto bookingRequestDto);
+
+    BookingResponseDto updateBooking(Integer bookingId, BookingRequestDto bookingRequestDto);
 }

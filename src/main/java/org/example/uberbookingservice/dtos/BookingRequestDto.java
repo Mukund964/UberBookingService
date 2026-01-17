@@ -12,6 +12,8 @@ import lombok.*;
 public class BookingRequestDto {
 
     private Long passengerId;
+    private Integer driverId;
+    private String BookingStatus;
 
     private ExactLocation startLocation;
 

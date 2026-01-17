@@ -11,7 +11,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingResponseDto {
-    private long bookingId;
+    private Integer bookingId;
     private String bookingStatus;
     private Optional<Driver> driver;
 }
