@@ -111,6 +111,8 @@ public class BookingServiceImpl implements BookingService{
     public void processNearbyDriversAsync(NearbyDriverLocationDto requestDto, Long passengerId, Integer bookingId){
         Call<driverLocationDto[]> call = locationServiceApi.findNearbyDrivers(requestDto);
 
+
+
         call.enqueue(new Callback<driverLocationDto[]>() {
             @Override
             public void onResponse(@NonNull Call<driverLocationDto[]> call, @NonNull Response<driverLocationDto[]> response) {

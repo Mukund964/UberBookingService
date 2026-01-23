@@ -37,7 +37,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webservices-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'com.example:entity-service:0.0.7-SNAPSHOT'
+    implementation 'com.example:entity-service:0.0.8-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:5.0.0'
@@ -45,6 +45,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:3.0.0'
     // Source: https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
     implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
+    // Source: https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+    implementation 'org.springframework.kafka:spring-kafka:4.0.1'
+    // Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:4.0.1'
 
 }
 
