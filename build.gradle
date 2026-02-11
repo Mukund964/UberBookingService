@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '3.4.2' // This plugin manages all spring-boot versions
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -14,42 +14,69 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
     mavenLocal()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-    implementation 'org.springframework.boot:spring-boot-starter-webservices'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-webservices-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'com.example:entity-service:0.0.8-SNAPSHOT'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:5.0.0'
-    // Source: https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
-    implementation 'com.squareup.retrofit2:retrofit:3.0.0'
-    // Source: https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
-    implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
-    // Source: https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
-    implementation 'org.springframework.kafka:spring-kafka:4.0.1'
-    // Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
-    implementation 'org.springframework.boot:spring-boot-gradle-plugin:4.0.1'
+// 1. ADD THIS: Spring Cloud BOM to manage Eureka versions automatically
+ext {
+    set('springCloudVersion', "2024.0.0")
+}
 
+dependencies {
+
+    // Web Starter (Logging Excluded)
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // 2. FIX: Remove version '5.0.0'. The BOM below will provide the correct compatible version.
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // 3. FIX: Remove version '4.0.1'. Spring Boot 3.4.2 knows which Kafka version to use.
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    // Retrofit stable version
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+
+    implementation('com.example:entity-service:0.0.8-SNAPSHOT') {
+        exclude group: 'org.springframework.boot'
+        exclude group: 'org.springframework'
+    }
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    //for async logging
+    implementation 'com.lmax:disruptor:3.4.4'
+}
+
+// 5. ADD THIS: This links your Eureka client to the correct Spring Boot version
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+configurations {
+    all {
+        // 1. GLOBALLY EXCLUDE Logback (The Default Engine)
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'ch.qos.logback', module: 'logback-core'
+    }
 }
 
 tasks.named('test') {

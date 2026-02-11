@@ -1,6 +1,7 @@
 package org.example.uberbookingservice.services;
 
 import com.example.EntityService.Models.*;
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.example.uberbookingservice.apis.LocationServiceApi;
@@ -9,7 +10,6 @@ import org.example.uberbookingservice.dtos.*;
 import org.example.uberbookingservice.repositories.bookingRepository;
 import org.example.uberbookingservice.repositories.driverRepository;
 import org.example.uberbookingservice.repositories.passengerRepository;
-import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
